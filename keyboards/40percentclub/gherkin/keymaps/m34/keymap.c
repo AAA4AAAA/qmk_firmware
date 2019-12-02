@@ -1,8 +1,22 @@
 #include QMK_KEYBOARD_H
 
-#define KC______ KC_TRNS
-#define KC_FN1_Q LT(1, KC_Q)
-#define KC_RST   RESET
+#define _QWERTY 0
+#define _FN1 1
+#define _FN2 2
+#define _ADJUST 3
+
+enum custom_keycodes {
+  QWERTY = SAFE_RANGE,
+  FN1,
+  FN2,
+  ADJUST,
+  RGBRST
+};
+
+#define KC______  KC_TRNS
+#define KC_RST    RESET
+#define KC_F1_SPC LT(_FN1, KC_SPC)
+#define KC_F2_ENT LT(_FN2, KC_ENT)
 
 #define LAYOUT_kc( \
   K00, K01, K02, K03, K04, K05, K10, K11, K12, K13, \
@@ -17,26 +31,45 @@
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-  [0] = LAYOUT_kc(
+  [_QWERTY] = LAYOUT_kc(
   //,---------------------------------------------------------------------.
-      FN1_Q,     W,     E,     R,     T,     Y,     U,     I,     O,     P,\
+          Q,     W,     E,     R,     T,     Y,     U,     I,     O,     P,\
   //|------+------+------+------+------+------+------+------+------+------|
           A,     S,     D,     F,     G,     H,     J,     K,     L,  BSPC,\
   //|------+------+------+------+------+------+------+------+------+------|
-          Z,     X,     C,     V,   SPC,   ENT,     B,     N,     M,  RSFT \
+          Z,     X,     C,     V,F1_SPC,F2_ENT,     B,     N,     M,  RSFT \
   //`------+------+------+------+------+------+------+------+------+------'
   ),
 
-  [1] = LAYOUT_kc(
+  [_FN1] = LAYOUT_kc(
   //,---------------------------------------------------------------------.
       _____, _____, _____, _____, _____, _____, _____, _____, _____, _____,\
   //|------+------+------+------+------+------+------+------+------+------|
       _____, _____, _____, _____, _____, _____, _____, _____, _____, _____,\
   //|------+------+------+------+------+------+------+------+------+------|
-      _____, _____, _____, _____, _____, _____,   RST, _____, _____, _____ \
+      _____, _____, _____, _____, _____, _____, _____, _____, _____, _____ \
   //`------+------+------+------+------+------+------+------+------+------'
   ),
 
+  [_FN2] = LAYOUT_kc(
+  //,---------------------------------------------------------------------.
+      _____, _____, _____, _____, _____, _____, _____, _____, _____, _____,\
+  //|------+------+------+------+------+------+------+------+------+------|
+      _____, _____, _____, _____, _____, _____, _____, _____, _____, _____,\
+  //|------+------+------+------+------+------+------+------+------+------|
+      _____, _____, _____, _____, _____, _____, _____, _____, _____, _____ \
+  //`------+------+------+------+------+------+------+------+------+------'
+  ),
+
+  [_ADJUST] = LAYOUT_kc(
+  //,---------------------------------------------------------------------.
+        RST, _____, _____, _____, _____, _____, _____, _____, _____, _____,\
+  //|------+------+------+------+------+------+------+------+------+------|
+      _____, _____, _____, _____, _____, _____, _____, _____, _____, _____,\
+  //|------+------+------+------+------+------+------+------+------+------|
+      _____, _____, _____, _____, _____, _____, _____, _____, _____, _____ \
+  //`------+------+------+------+------+------+------+------+------+------'
+  ),
 };
 
 void keyboard_pre_init_user(void) {
@@ -59,4 +92,49 @@ void led_set_user(uint8_t usb_led) {
   } else {
     writePinHigh(B0);
   }
+}
+
+// Setting ADJUST layer RGB back to default
+void update_tri_layer_RGB(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
+  if (IS_LAYER_ON(layer1) && IS_LAYER_ON(layer2)) {
+    layer_on(layer3);
+  } else {
+    layer_off(layer3);
+  }
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case QWERTY:
+      if (record->event.pressed) {
+        persistent_default_layer_set(1UL<<_QWERTY);
+      }
+      return false;
+    case FN1:
+      if (record->event.pressed) {
+        layer_on(_LOWER);
+        update_tri_layer_RGB(_FN1, _FN2, _ADJUST);
+      } else {
+        layer_off(_LOWER);
+        update_tri_layer_RGB(_FN1, _FN2, _ADJUST);
+      }
+      return false;
+    case FN2:
+      if (record->event.pressed) {
+        layer_on(_RAISE);
+        update_tri_layer_RGB(_FN1, _FN2, _ADJUST);
+      } else {
+        layer_off(_RAISE);
+        update_tri_layer_RGB(_FN1, _FN2, _ADJUST);
+      }
+      return false;
+    case ADJUST:
+      if (record->event.pressed) {
+        layer_on(_ADJUST);
+      } else {
+        layer_off(_ADJUST);
+      }
+      break;
+  }
+  return true;
 }
