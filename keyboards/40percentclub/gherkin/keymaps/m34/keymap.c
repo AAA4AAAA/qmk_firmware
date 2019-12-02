@@ -94,7 +94,11 @@ void led_set_user(uint8_t usb_led) {
   }
 }
 
-// Setting ADJUST layer RGB back to default
+void persistent_default_layer_set(uint16_t default_layer) {
+  eeconfig_update_default_layer(default_layer);
+  default_layer_set(default_layer);
+}
+
 void update_tri_layer_RGB(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
   if (IS_LAYER_ON(layer1) && IS_LAYER_ON(layer2)) {
     layer_on(layer3);
@@ -112,19 +116,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
     case FN1:
       if (record->event.pressed) {
-        layer_on(_LOWER);
+        layer_on(_FN1);
         update_tri_layer_RGB(_FN1, _FN2, _ADJUST);
       } else {
-        layer_off(_LOWER);
+        layer_off(_FN1);
         update_tri_layer_RGB(_FN1, _FN2, _ADJUST);
       }
       return false;
     case FN2:
       if (record->event.pressed) {
-        layer_on(_RAISE);
+        layer_on(_FN2);
         update_tri_layer_RGB(_FN1, _FN2, _ADJUST);
       } else {
-        layer_off(_RAISE);
+        layer_off(_FN2);
         update_tri_layer_RGB(_FN1, _FN2, _ADJUST);
       }
       return false;
