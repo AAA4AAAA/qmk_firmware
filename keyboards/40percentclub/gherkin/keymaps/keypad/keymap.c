@@ -38,9 +38,9 @@ enum custom_keycodes {
 #define KC_TAG9   LGUI(LSFT(KC_9))
 #define KC_TAG0   LGUI(LSFT(KC_0))
 
-#define KC_TILE   LGUI(KC_T)
-#define KC_MONO   LGUI(KC_M)
-#define KC_FLT    LGUI(KC_F)
+#define KC_LTILE  LGUI(KC_T)
+#define KC_LMONO  LGUI(KC_M)
+#define KC_LFLT   LGUI(KC_F)
 
 #define KC_DFSTK  LGUI(KC_J)
 #define KC_UFSTK  LGUI(KC_K)
@@ -65,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------+------+------+------+------|
        TAG1,  TAG2,  TAG3,  TAG4,  TAG5,  TAG6,  TAG7,  TAG8,  TAG9,  TAG0,\
   //|------+------+------+------+------+------+------+------+------+------|
-        FN1,   FN2, _____, _____,  TILE,  MONO,   FLT,  TFLT, DFSTK, UFSTK \
+        FN1,   FN2, _____, _____, LTILE, LMONO,  LFLT,  TFLT, DFSTK, UFSTK \
   //`------+------+------+------+------+------+------+------+------+------'
   ),
 
