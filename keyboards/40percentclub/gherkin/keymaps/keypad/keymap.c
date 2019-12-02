@@ -11,6 +11,8 @@ enum custom_keycodes {
   RGBRST
 };
 
+#define TAPPING_TERM 800
+
 #define KC______  KC_TRNS
 #define KC_RST    RESET
 #define KC_FN1    _FN1
