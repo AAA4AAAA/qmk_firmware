@@ -18,6 +18,11 @@ enum custom_keycodes {
 #define KC_F1_SPC LT(_FN1, KC_SPC)
 #define KC_F2_ENT LT(_FN2, KC_ENT)
 
+#define TAPPING_TERM 500
+
+// https://docs.qmk.fm/#/feature_advanced_keycodes?id=permissive-hold
+#define PERMISSIVE_HOLD
+
 #define LAYOUT_kc( \
   K00, K01, K02, K03, K04, K05, K10, K11, K12, K13, \
   K14, K15, K20, K21, K22, K23, K24, K25, K30, K31, \
@@ -37,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------+------+------+------+------|
           A,     S,     D,     F,     G,     H,     J,     K,     L,  BSPC,\
   //|------+------+------+------+------+------+------+------+------+------|
-          Z,     X,     C,     V,F1_SPC,F2_ENT,     B,     N,     M,  RSFT \
+          Z,     X,     C,     V,     B,F1_SPC,F2_ENT,     N,     M,  RSFT \
   //`------+------+------+------+------+------+------+------+------+------'
   ),
 
