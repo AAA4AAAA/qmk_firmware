@@ -3,20 +3,18 @@
 #define _QWERTY 0
 #define _FN1 1
 #define _FN2 2
-#define _ADJUST 3
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   FN1,
   FN2,
-  ADJUST,
   RGBRST
 };
 
 #define KC______  KC_TRNS
 #define KC_RST    RESET
-#define KC_F1_SPC LT(_FN1, KC_SPC)
-#define KC_F2_ENT LT(_FN2, KC_ENT)
+#define KC_FN1B   LT(_FN1, KC_B)
+#define KC_FN2N   LT(_FN2, KC_N)
 
 #define TAPPING_TERM 500
 
@@ -42,7 +40,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------+------+------+------+------|
           A,     S,     D,     F,     G,     H,     J,     K,     L,  RCTL,\
   //|------+------+------+------+------+------+------+------+------+------|
-          Z,     X,     C,     V,F1_SPC,F2_ENT,     B,     N,     M,  RSFT \
+          Z,     X,     C,     V,  FN1B,  FN2N,     M, _____, _____,  RSFT \
   //`------+------+------+------+------+------+------+------+------+------'
   ),
 
@@ -52,27 +50,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------+------+------+------+------|
        EXLM,    AT,  HASH,   DLR,  PERC,  CIRC,  AMPR,  ASTR,  LPRN,  RPRN,\
   //|------+------+------+------+------+------+------+------+------+------|
-       PLUS,   EQL,  UNDS,  MINS, _____, _____,  LBRC,  RBRC,  LCBR,  RCBR \
+       PLUS,   EQL,  UNDS,  MINS, _____,   ENT,  LBRC,  RBRC,  LCBR,  RCBR \
   //`------+------+------+------+------+------+------+------+------+------'
   ),
 
   [_FN2] = LAYOUT_kc(
   //,---------------------------------------------------------------------.
-       ESC, _____, _____, _____, _____, _____, _____, _____, _____,  BSPC,\
+        ESC, _____, _____, _____, _____, _____, _____, _____, _____,  BSPC,\
   //|------+------+------+------+------+------+------+------+------+------|
-      _____, _____, _____, _____, _____, _____, _____, _____, _____, _____,\
+      _____, _____, _____, _____, _____,  LEFT,  DOWN,    UP, RIGHT, _____,\
   //|------+------+------+------+------+------+------+------+------+------|
-      _____, _____, _____, _____, _____, _____, _____, _____, _____, _____ \
-  //`------+------+------+------+------+------+------+------+------+------'
-  ),
-
-  [_ADJUST] = LAYOUT_kc(
-  //,---------------------------------------------------------------------.
-        RST, _____, _____, _____, _____, _____, _____, _____, _____, _____,\
-  //|------+------+------+------+------+------+------+------+------+------|
-      _____, _____, _____, _____, _____, _____, _____, _____, _____, _____,\
-  //|------+------+------+------+------+------+------+------+------+------|
-      _____, _____, _____, _____, _____, _____, _____, _____, _____, _____ \
+        RST, _____, _____, _____,   SPC, _____, _____, _____, _____, _____ \
   //`------+------+------+------+------+------+------+------+------+------'
   ),
 };
@@ -104,14 +92,6 @@ void persistent_default_layer_set(uint16_t default_layer) {
   default_layer_set(default_layer);
 }
 
-void update_tri_layer_RGB(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
-  if (IS_LAYER_ON(layer1) && IS_LAYER_ON(layer2)) {
-    layer_on(layer3);
-  } else {
-    layer_off(layer3);
-  }
-}
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case QWERTY:
@@ -122,26 +102,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case FN1:
       if (record->event.pressed) {
         layer_on(_FN1);
-        update_tri_layer_RGB(_FN1, _FN2, _ADJUST);
       } else {
         layer_off(_FN1);
-        update_tri_layer_RGB(_FN1, _FN2, _ADJUST);
       }
       return false;
     case FN2:
       if (record->event.pressed) {
         layer_on(_FN2);
-        update_tri_layer_RGB(_FN1, _FN2, _ADJUST);
       } else {
         layer_off(_FN2);
-        update_tri_layer_RGB(_FN1, _FN2, _ADJUST);
-      }
-      return false;
-    case ADJUST:
-      if (record->event.pressed) {
-        layer_on(_ADJUST);
-      } else {
-        layer_off(_ADJUST);
       }
       break;
   }
