@@ -18,6 +18,7 @@ extern uint8_t is_master;
 #define _RAISE 2
 #define _ADJUST 3
 #define _MOUSE 4
+#define _WM 5
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
@@ -25,6 +26,7 @@ enum custom_keycodes {
   RAISE,
   ADJUST,
   MOUSE,
+  WM,
   BACKLIT,
   RGBRST
 };
@@ -34,7 +36,8 @@ enum custom_keycodes {
 #define KC_LOWER LOWER
 #define KC_RAISE RAISE
 #define KC_RST   RESET
-#define KC_MOSPC LT(_MOUSE, KC_SPC)
+#define KC_WENT  LT(_WM, KC_ENT)
+#define KC_MSPC  LT(_MOUSE, KC_SPC)
 
 #ifdef KC_COPY
 #undef KC_COPY
@@ -49,6 +52,10 @@ enum custom_keycodes {
 #define KC_LCK   LGUI(LALT(KC_ESC))
 #define KC_CADEL LCTL(LALT(KC_DEL))
 
+#define KC_V(K)  LGUI(KC_##K)
+#define KC_T(K)  LGUI(LSFT(KC_##K))
+#define KC_TILE  LGUI(LSFT(KC_SPC))
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
@@ -58,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LSFT,     Z,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,  BSLS,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                   LGUI, LOWER, MOSPC,      ENT, RAISE,  RALT \
+                                   LGUI, LOWER,  MSPC,     WENT, RAISE,  RALT \
                               //`--------------------'  `--------------------'
   ),
 
@@ -106,7 +113,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       _____, _____, _____, _____, _____, _____,                  _____,  WH_D,  WH_U, _____, _____, _____,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  _____, _____, MOSPC,     BTN1,  BTN3,  BTN2 \
+                                  _____, _____,  MSPC,     BTN1,  BTN3,  BTN2 \
+                              //`--------------------'  `--------------------'
+  ),
+
+  [_WM] = LAYOUT_kc( \
+  //,-----------------------------------------.                ,-----------------------------------------.
+      _____,  V(1),  V(2),  V(3),  V(4),  V(5),                   V(6),  V(7),  V(8),  V(9),  V(0), _____,\
+  //|------+------+------+------+------+------|                |------+------+------+------+------+------|
+      _____,  T(1),  T(2),  T(3),  T(4),  T(5),                   T(6),  T(7),  T(8),  T(9),  T(0), _____,\
+  //|------+------+------+------+------+------|                |------+------+------+------+------+------|
+      _____, _____, _____, _____, _____, _____,                  _____, _____, _____, _____, _____, _____,\
+  //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
+                                  _____, _____,  TILE,    _____, _____, _____ \
                               //`--------------------'  `--------------------'
   ),
 
