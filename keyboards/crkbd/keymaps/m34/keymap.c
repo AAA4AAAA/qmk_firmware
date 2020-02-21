@@ -91,7 +91,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------.                ,-----------------------------------------.
       XXXXX, XXXXX, XXXXX,   DLR,  LPRN,  RPRN,                   AMPR,  EXLM,    AT, XXXXX, XXXXX,  TILD,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____, XXXXX, XXXXX,  CIRC,  LCBR,  RCBR,                   MINS,   EQL,  PLUS, XXXXX,  COLN,  DQUO,\
+      _____, XXXXX, XXXXX,  CIRC,  LCBR,  RCBR,                   MINS,   EQL,  PLUS,  HASH,  COLN,  DQUO,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       _____, XXXXX, XXXXX,  PERC,  LBRC,  RBRC,                   UNDS,  ASTR,  LABK,  RABK,  QUES,  PIPE,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
