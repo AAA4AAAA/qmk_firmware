@@ -1,4 +1,6 @@
 #include QMK_KEYBOARD_H
+#include "analog.h"
+#include "print.h"
 
 extern keymap_config_t keymap_config;
 
@@ -14,18 +16,16 @@ extern uint8_t is_master;
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
 #define _QWERTY 0
-#define _LOWER 1
-#define _RAISE 2
+#define _LOWER  1
+#define _RAISE  2
 #define _ADJUST 3
-#define _MOUSE 4
-#define _WM 5
+#define _WM     4
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   LOWER,
   RAISE,
   ADJUST,
-  MOUSE,
   WM,
   BACKLIT,
   RGBRST
@@ -33,11 +33,18 @@ enum custom_keycodes {
 
 #define KC______ KC_TRNS
 #define KC_XXXXX KC_NO
+#define KC_RST   RESET
 #define KC_LOWER LOWER
 #define KC_RAISE RAISE
-#define KC_RST   RESET
 #define KC_WENT  LT(_WM, KC_ENT)
-#define KC_MSPC  LT(_MOUSE, KC_SPC)
+
+// WM
+#define KC_V(K)  LGUI(KC_##K)
+#define KC_TOGL  LGUI(LSFT(KC_SPC))
+#define KC_WINL  LGUI(LSFT(KC_H))
+#define KC_WIND  LGUI(LSFT(KC_J))
+#define KC_WINU  LGUI(LSFT(KC_K))
+#define KC_WINR  LGUI(LSFT(KC_L))
 
 #ifdef KC_COPY
 #undef KC_COPY
@@ -52,9 +59,8 @@ enum custom_keycodes {
 #define KC_LCK   LGUI(LALT(KC_ESC))
 #define KC_CADEL LCTL(LALT(KC_DEL))
 
-#define KC_V(K)  LGUI(KC_##K)
-#define KC_T(K)  LGUI(LSFT(KC_##K))
-#define KC_TILE  LGUI(LSFT(KC_SPC))
+
+#define KC_MX    LALT(KC_X)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_kc( \
@@ -65,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LSFT,     Z,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,  BSLS,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                   LGUI, LOWER,  MSPC,     WENT, RAISE,  RALT \
+                                   LGUI, LOWER,   SPC,     WENT, RAISE,  RALT \
                               //`--------------------'  `--------------------'
   ),
 
@@ -73,9 +79,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------.                ,-----------------------------------------.
         ESC,     1,     2,     3,     4,     5,                      6,     7,     8,     9,     0,   GRV,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____, _____, _____, _____, _____, _____,                   LEFT,  DOWN,    UP, RIGHT, _____, _____,\
+      _____, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                   LEFT,  DOWN,    UP, RIGHT, _____, _____,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____, _____, _____,  COPY,  PSTE, _____,                  _____, _____, _____, _____, _____, _____,\
+      _____, XXXXX, XXXXX,  COPY,  PSTE, XXXXX,                  XXXXX, XXXXX, _____, _____, _____, _____,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   _____, _____, _____,    _____, _____, _____ \
                               //`--------------------'  `--------------------'
@@ -83,11 +89,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_RAISE] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        ESC,  EXLM,    AT,  HASH,   DLR,  PERC,                   CIRC,  AMPR,  ASTR,  LPRN,  RPRN,  TILD,\
+      XXXXX, XXXXX, XXXXX,   DLR,  LPRN,  RPRN,                   AMPR,  EXLM, XXXXX, XXXXX, XXXXX,  TILD,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LCTL, _____, _____, _____, _____, _____,                   MINS,   EQL,  LBRC,  RBRC,  LCBR,  RCBR,\
+      _____, XXXXX, XXXXX,  CIRC,  LCBR,  RCBR,                   MINS,   EQL,  PLUS, XXXXX,  COLN,  DQUO,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LSFT, _____, _____, _____, _____, _____,                   UNDS,  PLUS,  LABK,  RABK,  QUES,  PIPE,\
+      _____, XXXXX, XXXXX,  PERC,  LBRC,  RBRC,                   UNDS,  ASTR,  LABK,  RABK,  QUES,  PIPE,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   _____, _____, _____,    _____, _____, _____ \
                               //`--------------------'  `--------------------'
@@ -95,51 +101,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_ADJUST] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-        RST, _____, _____, _____, _____, _____,                  _____, _____, _____, _____, _____, _____,\
+        RST, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LCTL, _____, _____, _____, _____, _____,                  _____, _____, _____, _____, _____,  PSCR,\
+      XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-       LSFT, _____, _____, _____, _____, _____,                  _____, _____, _____, _____, _____, CADEL,\
+      XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  _____, _____, _____,    _____, _____, _____ \
-                              //`--------------------'  `--------------------'
-  ),
-
-  [_MOUSE] = LAYOUT_kc( \
-  //,-----------------------------------------.                ,-----------------------------------------.
-      _____, _____, _____, _____, _____, _____,                  _____, _____, _____, _____, _____, _____,\
-  //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____, _____,  ACL0,  ACL1,  ACL2, _____,                   MS_L,  MS_D,  MS_U,  MS_R, _____, _____,\
-  //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____, _____, _____, _____, _____, _____,                  _____,  WH_D,  WH_U, _____, _____, _____,\
-  //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  _____, _____,  MSPC,     BTN1,  BTN3,  BTN2 \
+                                  XXXXX, XXXXX, XXXXX,    XXXXX, XXXXX, XXXXX \
                               //`--------------------'  `--------------------'
   ),
 
   [_WM] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-      _____,  V(1),  V(2),  V(3),  V(4),  V(5),                   V(6),  V(7),  V(8),  V(9),  V(0),   LCK,\
+      XXXXX,  V(1),  V(2),  V(3),  V(4),  V(5),                   V(6),  V(7),  V(8),  V(9),  V(0),   LCK,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____,  T(1),  T(2),  T(3),  T(4),  T(5),                   T(6),  T(7),  T(8),  T(9),  T(0), _____,\
+      _____, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                   WINL,  WIND,  WINU,  WINR, XXXXX, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____, _____, _____, _____, _____, _____,                  _____, _____, _____, _____, _____, _____,\
+      _____, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  _____, _____,  TILE,    _____, _____, _____ \
+                                  _____, _____,  TOGL,    _____, _____, _____ \
                               //`--------------------'  `--------------------'
   ),
-
-  /* [_LAYERINDEX] = LAYOUT_kc( \ */
-  /* //,-----------------------------------------.                ,-----------------------------------------. */
-  /*     _____, _____, _____, _____, _____, _____,                  _____, _____, _____, _____, _____, _____,\ */
-  /* //|------+------+------+------+------+------|                |------+------+------+------+------+------| */
-  /*     _____, _____, _____, _____, _____, _____,                  _____, _____, _____, _____, _____, _____,\ */
-  /* //|------+------+------+------+------+------|                |------+------+------+------+------+------| */
-  /*     _____, _____, _____, _____, _____, _____,                  _____, _____, _____, _____, _____, _____,\ */
-  /* //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------| */
-  /*                                 _____, _____, _____,    _____, _____, _____ \ */
-  /*                             //`--------------------'  `--------------------' */
-  /* ), */
 };
 
 int RGB_current_mode;
@@ -183,8 +165,15 @@ const char *read_keylogs(void);
 // void set_timelog(void);
 // const char *read_timelog(void);
 
+static void print_analog_pins(void) {
+   print_decs(analogRead(B4));
+   print_decs(analogRead(B5));
+   println();
+}
+
 void matrix_scan_user(void) {
    iota_gfx_task();
+   print_analog_pins();
 }
 
 void matrix_render_user(struct CharacterMatrix *matrix) {

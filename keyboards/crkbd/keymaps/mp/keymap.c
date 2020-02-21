@@ -42,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                   WH_L,  WH_D,  WH_U,  WH_R, XXXXX, XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  XXXXX, XXXXX, XXXXX,      FB1,   FB3,   FB2 \
+                                  XXXXX, XXXXX, XXXXX,     BTN1,  BTN3,  BTN2 \
                               //`--------------------'  `--------------------'
   ),
   [_FN1] = LAYOUT_kc( \
