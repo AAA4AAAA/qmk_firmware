@@ -79,21 +79,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------.                ,-----------------------------------------.
         ESC,     1,     2,     3,     4,     5,                      6,     7,     8,     9,     0,   GRV,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                   LEFT,  DOWN,    UP, RIGHT, _____, _____,\
+      _____, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                   LEFT,  DOWN,    UP, RIGHT,  COLN, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____, XXXXX, XXXXX,  COPY,  PSTE, XXXXX,                  XXXXX, XXXXX, _____, _____, _____, _____,\
+      _____, XXXXX, XXXXX,  COPY,  PSTE, XXXXX,                  XXXXX, XXXXX, XXXXX, _____, XXXXX, XXXXX,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   _____, _____, _____,    _____, _____, _____ \
                               //`--------------------'  `--------------------'
   ),
 
+  /*
+   ** EXLM
+   ** AT
+   ** HASH
+   ** DLR
+   ** PERC
+   ** CIRC
+   ** AMPR
+   ** ASTR
+   ** RPRN
+   ** LPRN
+   */
   [_RAISE] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-      XXXXX, XXXXX, XXXXX,   DLR,  LPRN,  RPRN,                   AMPR,  EXLM,    AT, XXXXX, XXXXX,  TILD,\
+      XXXXX, XXXXX,  CIRC,  EXLM, XXXXX, XXXXX,                  XXXXX, XXXXX,  LPRN,  RPRN,  LBRC,  TILD,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____, XXXXX, XXXXX,  CIRC,  LCBR,  RCBR,                   MINS,   EQL,  PLUS,  HASH,  COLN,  DQUO,\
+      XXXXX, XXXXX,  PERC,  ASTR,   DLR,  HASH,                   MINS,   EQL,  LCBR,  RCBR,  RBRC, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____, XXXXX, XXXXX,  PERC,  LBRC,  RBRC,                   UNDS,  ASTR,  LABK,  RABK,  QUES,  PIPE,\
+      XXXXX, XXXXX, XXXXX, XXXXX,    AT,  AMPR,                   UNDS,  PLUS, XXXXX, XXXXX,  QUES,  PIPE,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   _____, _____, _____,    _____, _____, _____ \
                               //`--------------------'  `--------------------'
