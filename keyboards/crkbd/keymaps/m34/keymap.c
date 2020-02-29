@@ -87,25 +87,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               //`--------------------'  `--------------------'
   ),
 
-  /*
-   ** EXLM
-   ** AT
-   ** HASH
-   ** DLR
-   ** PERC
-   ** CIRC
-   ** AMPR
-   ** ASTR
-   ** RPRN
-   ** LPRN
-   */
   [_RAISE] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
-      XXXXX, XXXXX,  CIRC,  EXLM, XXXXX, XXXXX,                  XXXXX, XXXXX,  LPRN,  RPRN,  LBRC,  TILD,\
+      XXXXX, XXXXX, XXXXX,  HASH,   DLR,  PERC,                   CIRC,  AMPR,  LPRN,  RPRN, XXXXX,  TILD,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      XXXXX, XXXXX,  PERC,  ASTR,   DLR,  HASH,                   MINS,   EQL,  LCBR,  RCBR,  RBRC, XXXXX,\
+      XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,  ASTR,                   MINS,   EQL,  LCBR,  RCBR, XXXXX, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      XXXXX, XXXXX, XXXXX, XXXXX,    AT,  AMPR,                   UNDS,  PLUS, XXXXX, XXXXX,  QUES,  PIPE,\
+      XXXXX, XXXXX, XXXXX, XXXXX,  EXLM,    AT,                   UNDS,  PLUS,  LBRC,  RBRC,  QUES,  PIPE,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   _____, _____, _____,    _____, _____, _____ \
                               //`--------------------'  `--------------------'
