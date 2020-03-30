@@ -36,15 +36,15 @@ enum custom_keycodes {
 #define KC_RST   RESET
 #define KC_LOWER LOWER
 #define KC_RAISE RAISE
-#define KC_WENT  LT(_WM, KC_ENT)
-
-// WM
-#define KC_V(K)  LGUI(KC_##K)
-#define KC_TOGL  LGUI(LSFT(KC_SPC))
-#define KC_WINL  LGUI(LSFT(KC_H))
-#define KC_WIND  LGUI(LSFT(KC_J))
-#define KC_WINU  LGUI(LSFT(KC_K))
-#define KC_WINR  LGUI(LSFT(KC_L))
+#define KC_LRST  RGBRST
+#define KC_LTOG  RGB_TOG
+#define KC_LHUI  RGB_HUI
+#define KC_LHUD  RGB_HUD
+#define KC_LSAI  RGB_SAI
+#define KC_LSAD  RGB_SAD
+#define KC_LVAI  RGB_VAI
+#define KC_LVAD  RGB_VAD
+#define KC_LMOD  RGB_MOD
 
 #ifdef KC_COPY
 #undef KC_COPY
@@ -57,8 +57,6 @@ enum custom_keycodes {
 #define KC_PSTE  LSFT(KC_INS)
 
 #define KC_LCK   LGUI(LALT(KC_ESC))
-#define KC_CADEL LCTL(LALT(KC_DEL))
-
 
 #define KC_MX    LALT(KC_X)
 
@@ -71,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
        LSFT,     Z,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,  BSLS,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                   LGUI, LOWER,   SPC,     WENT, RAISE,  RALT \
+                                   LGUI, LOWER,   SPC,      ENT, RAISE,  RALT \
                               //`--------------------'  `--------------------'
   ),
 
@@ -91,9 +89,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------.                ,-----------------------------------------.
       XXXXX, XXXXX, XXXXX,  HASH,   DLR,  PERC,                   CIRC,  AMPR,  LPRN,  RPRN, XXXXX,  TILD,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,  ASTR,                   MINS,   EQL,  LCBR,  RCBR, XXXXX, XXXXX,\
+      XXXXX, XXXXX, XXXXX,  EXLM,  EXLM,  ASTR,                   MINS,   EQL,  LCBR,  RCBR,  COLN,  DQUO,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      XXXXX, XXXXX, XXXXX, XXXXX,  EXLM,    AT,                   UNDS,  PLUS,  LBRC,  RBRC,  QUES,  PIPE,\
+      XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,    AT,                   UNDS,  PLUS,  LBRC,  RBRC,  QUES,  PIPE,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   _____, _____, _____,    _____, _____, _____ \
                               //`--------------------'  `--------------------'
@@ -103,23 +101,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------.                ,-----------------------------------------.
         RST, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
+       LTOG,  LHUI,  LSAI,  LVAI, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, \
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
+       LMOD,  LHUD,  LSAD,  LVAD, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, \
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  XXXXX, XXXXX, XXXXX,    XXXXX, XXXXX, XXXXX \
-                              //`--------------------'  `--------------------'
-  ),
-
-  [_WM] = LAYOUT_kc( \
-  //,-----------------------------------------.                ,-----------------------------------------.
-      XXXXX,  V(1),  V(2),  V(3),  V(4),  V(5),                   V(6),  V(7),  V(8),  V(9),  V(0),   LCK,\
-  //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                   WINL,  WIND,  WINU,  WINR, XXXXX, XXXXX,\
-  //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
-  //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
-                                  _____, _____,  TOGL,    _____, _____, _____ \
+                                  XXXXX, _____, XXXXX,    XXXXX, _____, XXXXX \
                               //`--------------------'  `--------------------'
   ),
 };

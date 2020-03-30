@@ -11,3 +11,4 @@ SRC +=  ./lib/glcdfont.c \
 
 
 ENCODER_ENABLE = yes
+RGBLIGHT_ENABLE = yes
