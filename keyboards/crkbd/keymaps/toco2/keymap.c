@@ -16,6 +16,7 @@ extern uint8_t is_master;
 #define _LOWER 1
 #define _RAISE 2
 #define _ADJUST 3
+#define _MOUSE 4
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
@@ -34,6 +35,7 @@ enum macro_keycodes {
 #define KC______ KC_TRNS
 #define KC_LOWER LOWER
 #define KC_RAISE RAISE
+#define KC_MOUSE TG(_MOUSE)
 #define KC_RST   RESET
 #define KC_RRST  RGBRST
 #define KC_RTOG  RGB_TOG
@@ -74,7 +76,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------.                ,-----------------------------------------.
         ESC,     1,     2,     3,     4,     5,                      6,     7,     8,     9,     0,   GRV,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      _____, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                   LEFT,  DOWN,    UP, RIGHT,  COLN,  QUOT,\
+      _____, MOUSE, XXXXX, XXXXX, XXXXX, XXXXX,                   LEFT,  DOWN,    UP, RIGHT,  COLN,  QUOT,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
       _____, XXXXX, XXXXX,  COPY,  PSTE, XXXXX,                  XXXXX, XXXXX, XXXXX,   DOT,  SLSH,  RSFT,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
@@ -104,7 +106,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   _____, _____, _____,    _____, _____, _____ \
                               //`--------------------'  `--------------------'
+  ),
 
+  [_MOUSE] = LAYOUT_kc( \
+  //,-----------------------------------------.                ,-----------------------------------------.
+      XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,\
+  //|------+------+------+------+------+------|                |------+------+------+------+------+------|
+      XXXXX, _____, XXXXX, XXXXX, XXXXX, XXXXX,                   MS_L,  MS_D,  MS_U,  MS_R, XXXXX, XXXXX,\
+  //|------+------+------+------+------+------|                |------+------+------+------+------+------|
+      XXXXX, XXXXX, XXXXX, XXXXX, XXXXX, XXXXX,                  XXXXX,  WH_D,  WH_U, XXXXX, XXXXX, XXXXX,\
+  //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
+                                  _____, _____, _____,     BTN1,  BTN3,  BTN2 \
+                              //`--------------------'  `--------------------'
   ),
 };
 
