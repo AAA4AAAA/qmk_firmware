@@ -35,7 +35,7 @@ enum macro_keycodes {
 #define KC______ KC_TRNS
 #define KC_LOWER LOWER
 #define KC_RAISE RAISE
-#define KC_MOUSE TG(_MOUSE)
+#define KC_MOUSE MO(_MOUSE)
 #define KC_RST   RESET
 #define KC_RRST  RGBRST
 #define KC_RTOG  RGB_TOG
